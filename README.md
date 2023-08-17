@@ -10,7 +10,7 @@ USAGE: reversebilinear2.exe <IN> [<OUT>]
 - フォルダを指定すると中のファイル全部処理する
 - [経緯はこの辺で](https://twitter.com/chigiri_vrc/status/1692041747315270135)
 
-## メモ
+## 原理
 
 ![image](https://github.com/chigirits/reversebilinear2/assets/61717977/ab36752b-88e4-4812-9c13-0f2e477664a0)
 
@@ -61,3 +61,10 @@ $$
 
 これにより拡大前の画素値が分かる
 
+## バイリニアで2倍しちゃった動画 → 同サイズ高画質化の手順まとめ
+
+1. `ffmpeg -i movie-in.mp4 -vcodec png sequence\image-%06d.png`
+2. `sequence\*` を waifu2x-caffe でノイズ除去（レベル2・UpPhoto・TTAオフ・分割サイズ512）
+3. その結果を reversebilinear2（本ツール）で半分サイズに復元、`sequence.half\*` に出力
+4. `sequence.half\*` をUpscaylで拡大（REMACRIx4）、`sequence.remacri\*` に出力
+5. `ffmpeg -r 60 -i sequence.remacri\image-%06d.png -sws_flags lanczos+accurate_rnd -s 3840x2160 -vcodec libx264 -pix_fmt yuv420p -b:v 90M movie-out.mp4`
