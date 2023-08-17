@@ -15,7 +15,7 @@ USAGE: reversebilinear2.exe <IN> [<OUT>]
 ![image](https://github.com/chigirits/reversebilinear2/assets/61717977/ab36752b-88e4-4812-9c13-0f2e477664a0)
 
 バイリニア拡大時に、たとえば x は a,b,c,d のリニアな内分点として画素値が混合されるから
-$$x = 0.75 (0.75 a + 0.25 b) + 0.25 (0.75 x + 0.25 d)$$
+$$x = 0.75 (0.75 a + 0.25 b) + 0.25 (0.75 c + 0.25 d)$$
 
 4つの点について連立方程式を立てると
 
